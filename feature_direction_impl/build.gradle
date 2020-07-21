@@ -32,6 +32,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // DI
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

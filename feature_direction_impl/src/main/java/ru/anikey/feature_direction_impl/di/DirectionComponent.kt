@@ -5,6 +5,7 @@ import ru.anikey.core_database_api.di.CoreDBClient
 import ru.anikey.core_network_api.di.CoreNetworkApi
 import ru.anikey.feature_direction_api.FeatureDirectionApi
 import ru.anikey.feature_direction_api.FeatureDirectionDependencies
+import ru.anikey.feature_direction_impl.presentation.fragments.DirectionMainFragment
 
 @DirectionScope
 @Component(
@@ -29,10 +30,12 @@ abstract class DirectionComponent : FeatureDirectionApi {
             return sDirectionComponent!!
         }
 
-        fun get(): FeatureDirectionApi = if (sDirectionComponent == null) {
+        fun get(): DirectionComponent = if (sDirectionComponent == null) {
             throw RuntimeException("${this::class.simpleName} is not init yet")
         } else sDirectionComponent!!
     }
+
+    abstract fun inject(directionMainFragment: DirectionMainFragment)
 
     @DirectionScope
     @Component(dependencies = [CoreNetworkApi::class, CoreDBClient::class])
