@@ -12,7 +12,11 @@ data class TerminalsUIModel(
     val giveoutCargo: Boolean,
     val isDefault: Boolean,
     val mapUrl: String?
-)
+) {
+    fun mapToDB(): TerminalsDBModel = TerminalsDBModel(
+        name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
+    )
+}
 
 fun TerminalsDBModel.mapToUI(): TerminalsUIModel = TerminalsUIModel(
     name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl

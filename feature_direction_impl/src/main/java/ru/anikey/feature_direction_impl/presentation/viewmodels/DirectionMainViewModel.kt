@@ -1,6 +1,5 @@
 package ru.anikey.feature_direction_impl.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.anikey.feature_direction_impl.domain.interactors.DataBaseInteractor
 import ru.anikey.feature_direction_impl.domain.interactors.NetworkInteractor
+import ru.anikey.feature_direction_impl.domain.models.TerminalsUIModel
 import ru.anikey.feature_direction_impl.presentation.viewstates.DirectionMainState
 
 class DirectionMainViewModel(
@@ -28,9 +28,19 @@ class DirectionMainViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ terminals ->
-                terminals.forEach {
-                    Log.d("TERMINAL", it.name)
-                }
+                saveTerminalsToDB(terminals)
+            }, {
+                mViewState.postValue(DirectionMainState.Error(throwable = it))
+            })
+        mDisposables.add(disposable)
+    }
+
+    private fun saveTerminalsToDB(terminals: List<TerminalsUIModel>) {
+        val disposable = mDataBaseInteractor.saveTerminals(terminals)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                mViewState.postValue(DirectionMainState.Success)
             }, {
                 mViewState.postValue(DirectionMainState.Error(throwable = it))
             })
@@ -41,5 +51,6 @@ class DirectionMainViewModel(
         mDisposables.dispose()
         super.onCleared()
     }
+
 
 }

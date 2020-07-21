@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.fragment_direction_main.view.*
 import ru.anikey.feature_direction_impl.R
 import ru.anikey.feature_direction_impl.di.DirectionComponent
 import ru.anikey.feature_direction_impl.presentation.viewmodels.DirectionMainViewModel
@@ -57,15 +59,17 @@ class DirectionMainFragment : Fragment(), LifecycleOwner {
     }
 
     private fun setLoadingState() {
-
+        requireView().mainProgressBar.visibility = View.VISIBLE
     }
 
     private fun setErrorState(throwable: Throwable) {
-
+        requireView().mainProgressBar.visibility = View.GONE
+        Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setSuccessState() {
-
+        requireView().mainProgressBar.visibility = View.GONE
+        Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
     }
 
 }

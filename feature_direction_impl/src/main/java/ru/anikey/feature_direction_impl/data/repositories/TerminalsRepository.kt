@@ -17,4 +17,8 @@ class TerminalsRepository @Inject constructor(
         .makeTerminalsRequest()
         .map { it.mapToUI() }
 
+    fun saveTerminals(terminals: List<TerminalsUIModel>) = coreDBClient
+        .terminalsDBClient()
+        .addTerminals(terminals = terminals.map { it.mapToDB() })
+
 }
