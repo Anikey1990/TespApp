@@ -13,6 +13,10 @@ buildscript {
         rx_version = "2.2.11"
         rx_android_version = "2.1.1"
 
+        // Http
+        retrofit_version = "2.9.0"
+        okhttp_logger_version = "4.7.2"
+
         // Test Stuff
         junit_version = "4.13"
         junit_ext_version = "1.1.1"

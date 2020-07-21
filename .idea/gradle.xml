@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core_injector" />
             <option value="$PROJECT_DIR$/core_network_api" />
+            <option value="$PROJECT_DIR$/core_network_impl" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
