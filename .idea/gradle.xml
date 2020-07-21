@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core_network_api" />
             <option value="$PROJECT_DIR$/core_network_impl" />
             <option value="$PROJECT_DIR$/feature_direction_api" />
+            <option value="$PROJECT_DIR$/feature_direction_impl" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

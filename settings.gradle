@@ -1,3 +1,4 @@
+include ':feature_direction_impl'
 include ':feature_direction_api'
 include ':core_database_impl'
 include ':core_database_api'
