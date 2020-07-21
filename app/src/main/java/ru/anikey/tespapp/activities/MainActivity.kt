@@ -1,7 +1,8 @@
-package ru.anikey.tespapp
+package ru.anikey.tespapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.anikey.tespapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
