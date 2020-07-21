@@ -1,3 +1,4 @@
+include ':core_database_impl'
 include ':core_database_api'
 include ':core_network_impl'
 include ':core_network_api'

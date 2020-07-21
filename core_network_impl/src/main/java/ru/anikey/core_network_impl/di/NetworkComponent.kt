@@ -10,7 +10,7 @@ abstract class NetworkComponent : CoreNetworkApi {
     companion object {
         private var sNetworkComponent: NetworkComponent? = null
 
-        fun get(): NetworkComponent {
+        fun get(): CoreNetworkApi {
             if (sNetworkComponent == null) {
                 synchronized(NetworkComponent::class) {
                     if (sNetworkComponent == null) {
