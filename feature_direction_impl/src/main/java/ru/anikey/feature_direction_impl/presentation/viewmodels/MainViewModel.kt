@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.anikey.feature_direction_impl.domain.interactors.DataBaseInteractor
 import ru.anikey.feature_direction_impl.domain.interactors.NetworkInteractor
-import ru.anikey.feature_direction_impl.domain.models.TerminalsUIModel
+import ru.anikey.feature_direction_impl.domain.models.TerminalUIModel
 import ru.anikey.feature_direction_impl.presentation.viewstates.DirectionMainState
 
 class MainViewModel(
@@ -35,7 +35,7 @@ class MainViewModel(
         mDisposables.add(disposable)
     }
 
-    private fun saveTerminalsToDB(terminals: List<TerminalsUIModel>) {
+    private fun saveTerminalsToDB(terminals: List<TerminalUIModel>) {
         val disposable = mDataBaseInteractor.saveTerminals(terminals)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

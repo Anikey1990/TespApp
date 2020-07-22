@@ -3,7 +3,7 @@ package ru.anikey.feature_direction_impl.domain.models
 import ru.anikey.core_database_api.data.models.TerminalsDBModel
 import ru.anikey.core_network_api.data.models.TerminalsResponseModel
 
-data class TerminalsUIModel(
+data class TerminalUIModel(
     val id: Int,
     val name: String,
     val address: String,
@@ -19,16 +19,16 @@ data class TerminalsUIModel(
     )
 }
 
-fun TerminalsDBModel.mapToUI(): TerminalsUIModel = TerminalsUIModel(
+fun TerminalsDBModel.mapToUI(): TerminalUIModel = TerminalUIModel(
     id, name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
 )
 
-fun TerminalsResponseModel.mapToUI(): List<TerminalsUIModel> {
-    val terminalsUIModel = mutableListOf<TerminalsUIModel>()
+fun TerminalsResponseModel.mapToUI(): List<TerminalUIModel> {
+    val terminalsUIModel = mutableListOf<TerminalUIModel>()
     city.forEach { city ->
         city.terminals.terminal.forEach { terminal ->
             terminalsUIModel.add(
-                TerminalsUIModel(
+                TerminalUIModel(
                     id = terminal.id,
                     name = terminal.name,
                     address = terminal.address,
