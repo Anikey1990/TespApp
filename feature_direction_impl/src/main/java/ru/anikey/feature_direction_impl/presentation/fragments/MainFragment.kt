@@ -12,15 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_direction_main.view.*
 import ru.anikey.feature_direction_impl.R
 import ru.anikey.feature_direction_impl.di.DirectionComponent
-import ru.anikey.feature_direction_impl.presentation.viewmodels.DirectionMainViewModel
+import ru.anikey.feature_direction_impl.presentation.viewmodels.MainViewModel
 import ru.anikey.feature_direction_impl.presentation.viewstates.DirectionMainState
 import javax.inject.Inject
 
-class DirectionMainFragment : Fragment(), LifecycleOwner {
+class MainFragment : Fragment(), LifecycleOwner {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelProvider.Factory
-    lateinit var mViewModel: DirectionMainViewModel
+    lateinit var mViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +40,11 @@ class DirectionMainFragment : Fragment(), LifecycleOwner {
 
     private fun initInjection() = DirectionComponent
         .get()
-        .inject(directionMainFragment = this)
+        .inject(mainFragment = this)
 
     private fun initViewModel() {
         mViewModel = ViewModelProvider(this, mViewModelFactory)
-            .get(DirectionMainViewModel::class.java)
+            .get(MainViewModel::class.java)
         lifecycle.addObserver(mViewModel)
     }
 

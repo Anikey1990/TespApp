@@ -12,7 +12,7 @@ import ru.anikey.feature_direction_impl.domain.interactors.NetworkInteractor
 import ru.anikey.feature_direction_impl.domain.models.TerminalsUIModel
 import ru.anikey.feature_direction_impl.presentation.viewstates.DirectionMainState
 
-class DirectionMainViewModel(
+class MainViewModel(
     private val mDataBaseInteractor: DataBaseInteractor,
     private val mNetworkInteractor: NetworkInteractor
 ) : ViewModel(), LifecycleObserver {

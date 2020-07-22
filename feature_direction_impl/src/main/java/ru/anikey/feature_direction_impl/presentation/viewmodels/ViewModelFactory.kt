@@ -14,8 +14,8 @@ class ViewModelFactory @Inject constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         when {
-            modelClass.isAssignableFrom(DirectionMainViewModel::class.java) -> {
-                return DirectionMainViewModel(mDataBaseInteractor, mNetworkInteractor) as T
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
+                return MainViewModel(mDataBaseInteractor, mNetworkInteractor) as T
             }
         }
         throw ClassNotFoundException("${modelClass.simpleName} is not found")
