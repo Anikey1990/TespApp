@@ -41,6 +41,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.legacy:legacy-support-v4:$legacy_support_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.cardview:cardview:$cardview_version"
 
     // DI
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

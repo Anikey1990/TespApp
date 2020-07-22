@@ -34,6 +34,7 @@ class DirectionView : CardView {
 
         setTerminalName(value = typedArray.getString(R.styleable.DirectionView_terminal_name))
         setTerminalAddress(value = typedArray.getString(R.styleable.DirectionView_terminal_address))
+        setEnabled(value = typedArray.getBoolean(R.styleable.DirectionView_enabled, true))
 
         typedArray.recycle()
     }
@@ -48,6 +49,13 @@ class DirectionView : CardView {
                 text = it
                 visibility = View.VISIBLE
             }
+        }
+    }
+
+    fun setEnabled(value: Boolean?) {
+        value?.let {
+            isClickable = it
+            alpha = if (it) 1f else 0.5f
         }
     }
 

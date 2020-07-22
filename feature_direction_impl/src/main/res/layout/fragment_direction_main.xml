@@ -7,18 +7,20 @@
     tools:context=".presentation.fragments.MainFragment">
 
     <ru.anikey.core_custom_views.DirectionView
-        android:layout_marginTop="4dp"
         android:id="@+id/fromField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:enabled="false"
         app:layout_constraintTop_toTopOf="parent"
         app:terminal_name="@string/main_from_title" />
 
     <ru.anikey.core_custom_views.DirectionView
-        android:layout_marginTop="4dp"
         android:id="@+id/toField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:enabled="false"
         app:layout_constraintTop_toBottomOf="@id/fromField"
         app:terminal_name="@string/main_to_title" />
 
@@ -27,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:enabled="false"
         android:text="@string/main_save_button"
         app:layout_constraintBottom_toBottomOf="parent" />
 

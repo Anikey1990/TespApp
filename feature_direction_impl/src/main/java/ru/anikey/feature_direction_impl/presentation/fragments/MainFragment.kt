@@ -68,8 +68,11 @@ class MainFragment : Fragment(), LifecycleOwner {
     }
 
     private fun setSuccessState() {
-        requireView().mainProgressBar.visibility = View.GONE
-        Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
+        requireView().apply {
+            mainProgressBar.visibility = View.GONE
+            fromField.setEnabled(value = true)
+            toField.setEnabled(value = true)
+        }
     }
 
 }

@@ -3,5 +3,6 @@
     <declare-styleable name="DirectionView">
         <attr name="terminal_name" format="string" />
         <attr name="terminal_address" format="string" />
+        <attr name="enabled" format="boolean" />
     </declare-styleable>
 </resources>
