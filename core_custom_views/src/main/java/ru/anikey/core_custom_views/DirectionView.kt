@@ -43,7 +43,12 @@ class DirectionView : CardView {
     }
 
     fun setTerminalAddress(value: String?) {
-        description.text = value
+        value?.let {
+            description.apply {
+                text = it
+                visibility = View.VISIBLE
+            }
+        }
     }
 
 }
