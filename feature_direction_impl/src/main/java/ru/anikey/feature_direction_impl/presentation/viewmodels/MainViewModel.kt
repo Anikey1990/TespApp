@@ -19,6 +19,7 @@ class MainViewModel(
 
     private val mDisposables = CompositeDisposable()
     private val mViewState = MutableLiveData<DirectionMainState>()
+    var isTerminalsLoaded = false
 
     fun getViewState(): LiveData<DirectionMainState> = mViewState
 
@@ -41,6 +42,7 @@ class MainViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 mViewState.postValue(DirectionMainState.Success)
+                isTerminalsLoaded = true
             }, {
                 mViewState.postValue(DirectionMainState.Error(throwable = it))
             })

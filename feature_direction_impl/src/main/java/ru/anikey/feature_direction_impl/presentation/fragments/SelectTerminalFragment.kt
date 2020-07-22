@@ -11,6 +11,18 @@ import ru.anikey.feature_direction_impl.presentation.adapters.SelectTerminalView
 
 class SelectTerminalFragment : Fragment() {
 
+    enum class EnumDirection { FROM, TO }
+
+    private lateinit var direction: EnumDirection
+
+    companion object {
+        fun getInstance(direction: EnumDirection): SelectTerminalFragment {
+            val fragment = SelectTerminalFragment()
+            fragment.direction = direction
+            return fragment
+        }
+    }
+
     lateinit var mViewPagerAdapter: SelectTerminalViewPagerAdapter
 
     override fun onCreateView(
@@ -35,6 +47,10 @@ class SelectTerminalFragment : Fragment() {
                 view.viewPager.adapter = mViewPagerAdapter
                 view.tabLayout.setupWithViewPager(view.viewPager)
             }
+        }
+        when (direction) {
+            EnumDirection.FROM -> view.tabLayout.getTabAt(0)?.select()
+            EnumDirection.TO -> view.tabLayout.getTabAt(1)?.select()
         }
     }
 

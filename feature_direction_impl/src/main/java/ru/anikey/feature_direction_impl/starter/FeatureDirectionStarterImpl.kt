@@ -7,8 +7,13 @@ import javax.inject.Inject
 
 class FeatureDirectionStarterImpl @Inject constructor() : FeatureDirectionStarter {
 
+    companion object {
+        lateinit var aRouter: Router
+    }
+
     override fun startFeature(router: Router) {
-        router.newRootScreen(DirectionScreen.Main())
+        aRouter = router
+        aRouter.newRootScreen(DirectionScreen.Main())
     }
 
 }

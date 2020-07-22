@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_direction_main.view.*
 import ru.anikey.feature_direction_impl.R
 import ru.anikey.feature_direction_impl.di.DirectionComponent
+import ru.anikey.feature_direction_impl.presentation.navigation.DirectionScreen
 import ru.anikey.feature_direction_impl.presentation.viewmodels.MainViewModel
 import ru.anikey.feature_direction_impl.presentation.viewstates.DirectionMainState
+import ru.anikey.feature_direction_impl.starter.FeatureDirectionStarterImpl
 import javax.inject.Inject
 
 class MainFragment : Fragment(), LifecycleOwner {
@@ -31,9 +33,10 @@ class MainFragment : Fragment(), LifecycleOwner {
 
         initInjection()
         initViewModel()
+        initViews(view = root)
         subscribeData()
 
-        mViewModel.getTerminals()
+        if (!mViewModel.isTerminalsLoaded) mViewModel.getTerminals()
 
         return root
     }
@@ -46,6 +49,24 @@ class MainFragment : Fragment(), LifecycleOwner {
         mViewModel = ViewModelProvider(this, mViewModelFactory)
             .get(MainViewModel::class.java)
         lifecycle.addObserver(mViewModel)
+    }
+
+    private fun initViews(view: View) = view.apply {
+        fromField.setOnClickListener {
+            FeatureDirectionStarterImpl.aRouter.navigateTo(
+                DirectionScreen.SelectTerminal(
+                    direction = SelectTerminalFragment.EnumDirection.FROM
+                )
+            )
+        }
+
+        toField.setOnClickListener {
+            FeatureDirectionStarterImpl.aRouter.navigateTo(
+                DirectionScreen.SelectTerminal(
+                    direction = SelectTerminalFragment.EnumDirection.TO
+                )
+            )
+        }
     }
 
     private fun subscribeData() {
