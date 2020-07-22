@@ -1,5 +1,6 @@
 package ru.anikey.feature_direction_impl.data.repositories
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import ru.anikey.core_database_api.di.CoreDBClient
 import ru.anikey.core_network_api.di.CoreNetworkApi
@@ -9,13 +10,20 @@ import javax.inject.Inject
 
 class TerminalsRepository @Inject constructor(
     private val coreNetworkApi: CoreNetworkApi,
-    val coreDBClient: CoreDBClient
+    private val coreDBClient: CoreDBClient
 ) {
 
     fun loadTerminalsFromNetwork(): Single<List<TerminalUIModel>> = coreNetworkApi
         .terminalsApiClient()
         .makeTerminalsRequest()
         .map { it.mapToUI() }
+
+    fun loadTerminalsFromDataBase(): Observable<List<TerminalUIModel>> = coreDBClient
+        .terminalsDBClient()
+        .getTerminals()
+        .map { terminalsList ->
+            terminalsList.map { it.mapToUI() }
+        }
 
     fun saveTerminals(terminals: List<TerminalUIModel>) = coreDBClient
         .terminalsDBClient()

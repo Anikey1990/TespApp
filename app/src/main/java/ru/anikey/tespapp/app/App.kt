@@ -2,6 +2,7 @@ package ru.anikey.tespapp.app
 
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.Stetho
 import ru.anikey.tespapp.di.AppComponent
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
@@ -25,6 +26,8 @@ class App : Application() {
         INSTANCE = this
 
         initInjection()
+
+        Stetho.initializeWithDefaults(this)
     }
 
     private fun initInjection() = AppComponent

@@ -17,6 +17,9 @@ class ViewModelFactory @Inject constructor(
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 return MainViewModel(mDataBaseInteractor, mNetworkInteractor) as T
             }
+            modelClass.isAssignableFrom(SelectTerminalViewModel::class.java) -> {
+                return SelectTerminalViewModel(mDataBaseInteractor) as T
+            }
         }
         throw ClassNotFoundException("${modelClass.simpleName} is not found")
     }

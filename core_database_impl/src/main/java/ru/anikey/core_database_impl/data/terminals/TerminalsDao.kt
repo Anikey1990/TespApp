@@ -5,13 +5,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.Observable
 
 @Dao
 interface TerminalsDao {
 
-    @Query("SELECT * FROM terminalsentity")
-    fun getTerminals(): Single<List<TerminalsEntity>>
+    @Query("SELECT * FROM TerminalsEntity")
+    fun getTerminals(): Observable<List<TerminalsEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addTerminals(terminals: List<TerminalsEntity>): Completable

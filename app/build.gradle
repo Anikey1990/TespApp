@@ -39,6 +39,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
+    // Stetho
+    implementation "com.facebook.stetho:stetho:$stetho_version"
+
     // Cicerone
     implementation "ru.terrakok.cicerone:cicerone:$cicerone_version"
 

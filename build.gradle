@@ -9,6 +9,9 @@ buildscript {
         cardview_version = "1.0.0"
         material_version = "1.1.0"
 
+        // Stetho
+        stetho_version = "1.5.1"
+
         // Navigation
         cicerone_version = "5.1.0"
 
