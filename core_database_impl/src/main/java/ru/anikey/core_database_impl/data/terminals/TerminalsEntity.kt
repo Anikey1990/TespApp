@@ -6,7 +6,8 @@ import ru.anikey.core_database_api.data.models.TerminalsDBModel
 
 @Entity
 data class TerminalsEntity(
-    @PrimaryKey val name: String,
+    @PrimaryKey val id: Int,
+    val name: String,
     val address: String,
     val latitude: String,
     val longitude: String,
@@ -17,9 +18,9 @@ data class TerminalsEntity(
 )
 
 fun TerminalsDBModel.mapToEntity(): TerminalsEntity = TerminalsEntity(
-    name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
+    id, name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
 )
 
 fun TerminalsEntity.mapToDBModel(): TerminalsDBModel = TerminalsDBModel(
-    name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
+    id, name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
 )

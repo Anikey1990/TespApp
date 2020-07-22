@@ -4,6 +4,7 @@ import ru.anikey.core_database_api.data.models.TerminalsDBModel
 import ru.anikey.core_network_api.data.models.TerminalsResponseModel
 
 data class TerminalsUIModel(
+    val id: Int,
     val name: String,
     val address: String,
     val latitude: String,
@@ -14,12 +15,12 @@ data class TerminalsUIModel(
     val mapUrl: String?
 ) {
     fun mapToDB(): TerminalsDBModel = TerminalsDBModel(
-        name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
+        id, name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
     )
 }
 
 fun TerminalsDBModel.mapToUI(): TerminalsUIModel = TerminalsUIModel(
-    name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
+    id, name, address, latitude, longitude, receiveCargo, giveoutCargo, isDefault, mapUrl
 )
 
 fun TerminalsResponseModel.mapToUI(): List<TerminalsUIModel> {
@@ -28,6 +29,7 @@ fun TerminalsResponseModel.mapToUI(): List<TerminalsUIModel> {
         city.terminals.terminal.forEach { terminal ->
             terminalsUIModel.add(
                 TerminalsUIModel(
+                    id = terminal.id,
                     name = terminal.name,
                     address = terminal.address,
                     latitude = terminal.latitude,

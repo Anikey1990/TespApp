@@ -13,6 +13,7 @@ data class Terminals(
 )
 
 data class Terminal(
+    val id: Int,
     val name: String,
     val address: String,
     val latitude: String,

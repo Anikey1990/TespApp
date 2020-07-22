@@ -1,6 +1,7 @@
 package ru.anikey.core_database_api.data.models
 
 data class TerminalsDBModel(
+    val id: Int,
     val name: String,
     val address: String,
     val latitude: String,
