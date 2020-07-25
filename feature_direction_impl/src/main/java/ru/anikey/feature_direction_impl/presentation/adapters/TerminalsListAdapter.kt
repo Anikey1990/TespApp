@@ -13,6 +13,7 @@ class TerminalsListAdapter @Inject constructor() :
     RecyclerView.Adapter<TerminalsListAdapter.TerminalsListVH>() {
 
     private val mTerminals = mutableListOf<TerminalUIModel>()
+    private val mTempList = mutableListOf<TerminalUIModel>()
     private var mClickListener: OnTerminalClickListener? = null
 
     fun fetchData(terminals: List<TerminalUIModel>) {
@@ -23,6 +24,21 @@ class TerminalsListAdapter @Inject constructor() :
 
     fun setOnClickListener(onTerminalClickListener: OnTerminalClickListener) {
         mClickListener = onTerminalClickListener
+    }
+
+    fun filterList(query: String?) {
+        if (mTempList.isEmpty()) mTempList.addAll(mTerminals)
+
+        if (!query.isNullOrEmpty()) {
+            mTerminals.clear()
+
+            mTerminals.addAll(mTempList.filter {
+                it.name.startsWith(prefix = query, ignoreCase = true) or
+                        it.address.startsWith(prefix = query, ignoreCase = true)
+            })
+
+            notifyDataSetChanged()
+        } else fetchData(mTempList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TerminalsListVH =

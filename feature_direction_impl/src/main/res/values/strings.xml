@@ -9,4 +9,7 @@
     <!-- Select Terminal Fragment -->
     <string name="select_terminal_toolbar_title">Выбор терминала</string>
 
+    <!-- Menu -->
+    <string name="menu_search">Search</string>
+
 </resources>

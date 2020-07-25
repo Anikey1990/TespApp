@@ -1,12 +1,10 @@
 package ru.anikey.feature_direction_impl.presentation.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +22,7 @@ import ru.anikey.feature_direction_impl.presentation.viewmodels.SelectTerminalVi
 import ru.anikey.feature_direction_impl.presentation.viewstates.SelectTerminalViewState
 import ru.anikey.feature_direction_impl.starter.FeatureDirectionStarterImpl
 import javax.inject.Inject
+
 
 class SelectTerminalFragment : Fragment() {
 
@@ -65,6 +64,24 @@ class SelectTerminalFragment : Fragment() {
         mViewModel.getTerminals()
 
         return root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val searchItem = menu.findItem(R.id.menuSearch)
+        val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                mAdapter.filterList(query = query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                mAdapter.filterList(query = newText)
+                return false
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
