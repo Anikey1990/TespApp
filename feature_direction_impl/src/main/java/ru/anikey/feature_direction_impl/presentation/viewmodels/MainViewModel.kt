@@ -4,12 +4,15 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import ru.anikey.core_database_api.data.models.OrdersDBModel
 import ru.anikey.feature_direction_impl.domain.interactors.DataBaseInteractor
 import ru.anikey.feature_direction_impl.domain.interactors.NetworkInteractor
 import ru.anikey.feature_direction_impl.domain.models.TerminalUIModel
+import ru.anikey.feature_direction_impl.presentation.managers.OrderManager
 import ru.anikey.feature_direction_impl.presentation.viewstates.DirectionMainState
 
 class MainViewModel(
@@ -36,9 +39,15 @@ class MainViewModel(
         mDisposables.add(disposable)
     }
 
-    fun saveOrder() {
-
-    }
+    fun saveOrder(): Completable = mDataBaseInteractor
+        .saveOrder(
+            OrdersDBModel(
+                orderId = null,
+                terminalFromId = OrderManager.terminalFrom!!.id,
+                terminalToId = OrderManager.terminalTo!!.id
+            )
+        ).subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
     private fun saveTerminalsToDB(terminals: List<TerminalUIModel>) {
         val disposable = mDataBaseInteractor.saveTerminals(terminals)

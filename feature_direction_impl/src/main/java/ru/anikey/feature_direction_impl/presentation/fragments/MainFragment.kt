@@ -76,7 +76,9 @@ class MainFragment : Fragment(), LifecycleOwner {
         }
 
         saveButton.setOnClickListener {
-            mViewModel
+            mViewModel.saveOrder().subscribe({
+                Toast.makeText(requireContext(), "Заказ сохранен", Toast.LENGTH_LONG).show()
+            }, { setErrorState(throwable = it) })
         }
     }
 
