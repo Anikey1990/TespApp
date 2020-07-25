@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -34,6 +35,7 @@ class MainFragment : Fragment(), LifecycleOwner {
 
         initInjection()
         initViewModel()
+        setUpToolbar()
         initViews(view = root)
         subscribeData()
 
@@ -57,6 +59,15 @@ class MainFragment : Fragment(), LifecycleOwner {
             .get(MainViewModel::class.java)
         lifecycle.addObserver(mViewModel)
     }
+
+    private fun setUpToolbar() = with(requireActivity() as AppCompatActivity) {
+        this.supportActionBar?.apply {
+            title = getString(R.string.main_toolbar_title)
+            setHasOptionsMenu(false)
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        }
+    }
+
 
     private fun initViews(view: View) = view.apply {
         fromField.setOnClickListener {

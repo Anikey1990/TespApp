@@ -2,6 +2,7 @@ package ru.anikey.tespapp.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.anikey.core_injector.FeatureInjector
 import ru.anikey.tespapp.R
 import ru.anikey.tespapp.app.App
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        initToolbar()
 
         if (savedInstanceState == null) FeatureInjector.getDirectionFeature(context = this)
             .featureDirectionStarter()
@@ -29,5 +32,7 @@ class MainActivity : AppCompatActivity() {
         App.INSTANCE.getNavigationHolder().removeNavigator()
         super.onPause()
     }
+
+    private fun initToolbar() = setSupportActionBar(toolbar)
 
 }

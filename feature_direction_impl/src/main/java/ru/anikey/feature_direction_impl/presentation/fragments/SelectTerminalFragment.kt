@@ -2,9 +2,11 @@ package ru.anikey.feature_direction_impl.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -52,6 +54,7 @@ class SelectTerminalFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_select_terminal, container, false)
 
         initInjection()
+        initToolbar()
         initTabs(view = root)
         initRecycler(view = root)
         initViewModel()
@@ -62,6 +65,16 @@ class SelectTerminalFragment : Fragment() {
         return root
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressed()
+                return true
+            }
+        }
+        return false
+    }
+
     private fun initInjection() = DirectionComponent
         .get()
         .inject(selectTerminalFragment = this)
@@ -70,6 +83,16 @@ class SelectTerminalFragment : Fragment() {
         mViewModel = ViewModelProvider(this, mViewModelFactory)
             .get(SelectTerminalViewModel::class.java)
         lifecycle.addObserver(mViewModel)
+    }
+
+    private fun initToolbar() {
+        with(requireActivity() as AppCompatActivity) {
+            this.supportActionBar?.apply {
+                title = getString(R.string.select_terminal_toolbar_title)
+                setHasOptionsMenu(true)
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            }
+        }
     }
 
     private fun initTabs(view: View) {

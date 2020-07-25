@@ -7,6 +7,8 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
+        android:background="@color/colorPrimary"
+        app:tabTextColor="@color/colorYellow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"

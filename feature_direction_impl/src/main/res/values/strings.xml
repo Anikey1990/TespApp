@@ -1,8 +1,12 @@
 <resources>
 
     <!-- Main Fragment -->
+    <string name="main_toolbar_title">Создание заказа</string>
     <string name="main_from_title">Откуда</string>
     <string name="main_to_title">Куда</string>
     <string name="main_save_button">Сохранить</string>
+
+    <!-- Select Terminal Fragment -->
+    <string name="select_terminal_toolbar_title">Выбор терминала</string>
 
 </resources>
