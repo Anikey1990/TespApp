@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_select_terminal.view.*
 import ru.anikey.feature_direction_impl.R
@@ -149,6 +151,7 @@ class SelectTerminalFragment : Fragment() {
         view.terminalsList.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
             setHasFixedSize(true)
         }
     }
