@@ -46,9 +46,9 @@ class TerminalsListAdapter @Inject constructor() :
             view.apply {
                 name.text = terminal.name
                 address.text = terminal.address
-            }
 
-            mClickListener?.onTerminalClicked(terminal)
+                setOnClickListener { mClickListener?.onTerminalClicked(terminal) }
+            }
         }
     }
 

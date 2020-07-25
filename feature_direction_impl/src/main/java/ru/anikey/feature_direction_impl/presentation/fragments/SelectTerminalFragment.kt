@@ -8,13 +8,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_select_terminal.view.*
 import ru.anikey.feature_direction_impl.R
 import ru.anikey.feature_direction_impl.di.DirectionComponent
 import ru.anikey.feature_direction_impl.domain.models.TerminalUIModel
-import ru.anikey.feature_direction_impl.presentation.adapters.SelectTerminalViewPagerAdapter
+import ru.anikey.feature_direction_impl.presentation.adapters.TerminalsListAdapter
+import ru.anikey.feature_direction_impl.presentation.managers.OrderManager
 import ru.anikey.feature_direction_impl.presentation.viewmodels.SelectTerminalViewModel
 import ru.anikey.feature_direction_impl.presentation.viewstates.SelectTerminalViewState
+import ru.anikey.feature_direction_impl.starter.FeatureDirectionStarterImpl
 import javax.inject.Inject
 
 class SelectTerminalFragment : Fragment() {
@@ -22,6 +26,8 @@ class SelectTerminalFragment : Fragment() {
     enum class EnumDirection { FROM, TO }
 
     private lateinit var direction: EnumDirection
+    private val terminalsFrom = mutableListOf<TerminalUIModel>()
+    private val terminalsTo = mutableListOf<TerminalUIModel>()
 
     companion object {
         fun getInstance(direction: EnumDirection): SelectTerminalFragment {
@@ -35,7 +41,8 @@ class SelectTerminalFragment : Fragment() {
     lateinit var mViewModelFactory: ViewModelProvider.Factory
     private lateinit var mViewModel: SelectTerminalViewModel
 
-    private lateinit var mViewPagerAdapter: SelectTerminalViewPagerAdapter
+    @Inject
+    lateinit var mAdapter: TerminalsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +52,8 @@ class SelectTerminalFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_select_terminal, container, false)
 
         initInjection()
-        initViews(view = root)
+        initTabs(view = root)
+        initRecycler(view = root)
         initViewModel()
         subscribeData()
 
@@ -64,20 +72,61 @@ class SelectTerminalFragment : Fragment() {
         lifecycle.addObserver(mViewModel)
     }
 
-    private fun initViews(view: View) {
-        mViewPagerAdapter = SelectTerminalViewPagerAdapter(fragmentManager = childFragmentManager)
-        mViewPagerAdapter.apply {
-            if (count == 0) {
-                addFragment(title = "Откуда", fragment = TerminalsListFragment())
-                addFragment(title = "Куда", fragment = TerminalsListFragment())
-
-                view.viewPager.adapter = mViewPagerAdapter
-                view.tabLayout.setupWithViewPager(view.viewPager)
+    private fun initTabs(view: View) {
+        view.tabLayout.apply {
+            addTab(newTab())
+            addTab(newTab())
+            getTabAt(0)?.apply {
+                text = getString(R.string.main_from_title)
+                if (direction == EnumDirection.FROM) select()
             }
+            getTabAt(1)?.apply {
+                text = getString(R.string.main_to_title)
+                if (direction == EnumDirection.TO) select()
+            }
+
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> {
+                            direction = EnumDirection.FROM
+                            mAdapter.fetchData(terminals = terminalsFrom)
+                        }
+                        1 -> {
+                            direction = EnumDirection.TO
+                            mAdapter.fetchData(terminals = terminalsTo)
+                        }
+                    }
+                }
+            })
         }
-        when (direction) {
-            EnumDirection.FROM -> view.tabLayout.getTabAt(0)?.select()
-            EnumDirection.TO -> view.tabLayout.getTabAt(1)?.select()
+    }
+
+    private fun initRecycler(view: View) {
+        mAdapter.setOnClickListener(onTerminalClickListener = object :
+            TerminalsListAdapter.OnTerminalClickListener {
+
+            override fun onTerminalClicked(terminal: TerminalUIModel) {
+                when (direction) {
+                    EnumDirection.FROM -> {
+                        OrderManager.terminalFrom = terminal
+                        FeatureDirectionStarterImpl.aRouter.exit()
+                    }
+                    EnumDirection.TO -> {
+                        OrderManager.terminalTo = terminal
+                        FeatureDirectionStarterImpl.aRouter.exit()
+                    }
+                }
+            }
+        })
+        view.terminalsList.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
         }
     }
 
@@ -94,11 +143,13 @@ class SelectTerminalFragment : Fragment() {
         })
     }
 
-    private fun setLoadingState() {
-
+    private fun setLoadingState() = requireView().apply {
+        terminalsProgressBar.visibility = View.VISIBLE
+        terminalsList.visibility = View.GONE
     }
 
     private fun setErrorState(throwable: Throwable) {
+        requireView().terminalsProgressBar.visibility = View.GONE
         Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
     }
 
@@ -106,12 +157,22 @@ class SelectTerminalFragment : Fragment() {
         terminalsFrom: List<TerminalUIModel>,
         terminalsTo: List<TerminalUIModel>
     ) {
-        with(mViewPagerAdapter.getItem(0) as TerminalsListFragment) {
-            this.fetchTerminals(data = terminalsFrom)
+        this.terminalsFrom.apply {
+            clear()
+            addAll(terminalsFrom)
+        }
+        this.terminalsTo.apply {
+            clear()
+            addAll(terminalsTo)
+        }
+        when (direction) {
+            EnumDirection.FROM -> mAdapter.fetchData(this.terminalsFrom)
+            EnumDirection.TO -> mAdapter.fetchData(this.terminalsTo)
         }
 
-        with(mViewPagerAdapter.getItem(1) as TerminalsListFragment) {
-            this.fetchTerminals(data = terminalsTo)
+        requireView().apply {
+            terminalsProgressBar.visibility = View.GONE
+            terminalsList.visibility = View.VISIBLE
         }
     }
 

@@ -7,7 +7,6 @@ import ru.anikey.feature_direction_api.FeatureDirectionApi
 import ru.anikey.feature_direction_api.FeatureDirectionDependencies
 import ru.anikey.feature_direction_impl.presentation.fragments.MainFragment
 import ru.anikey.feature_direction_impl.presentation.fragments.SelectTerminalFragment
-import ru.anikey.feature_direction_impl.presentation.fragments.TerminalsListFragment
 
 @DirectionScope
 @Component(
@@ -40,8 +39,6 @@ abstract class DirectionComponent : FeatureDirectionApi {
     abstract fun inject(mainFragment: MainFragment)
 
     abstract fun inject(selectTerminalFragment: SelectTerminalFragment)
-
-    abstract fun inject(terminalsListFragment: TerminalsListFragment)
 
     @DirectionScope
     @Component(dependencies = [CoreNetworkApi::class, CoreDBClient::class])

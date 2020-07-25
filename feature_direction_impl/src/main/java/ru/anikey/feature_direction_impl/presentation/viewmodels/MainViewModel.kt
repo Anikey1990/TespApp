@@ -36,6 +36,10 @@ class MainViewModel(
         mDisposables.add(disposable)
     }
 
+    fun saveOrder() {
+
+    }
+
     private fun saveTerminalsToDB(terminals: List<TerminalUIModel>) {
         val disposable = mDataBaseInteractor.saveTerminals(terminals)
             .subscribeOn(Schedulers.io())

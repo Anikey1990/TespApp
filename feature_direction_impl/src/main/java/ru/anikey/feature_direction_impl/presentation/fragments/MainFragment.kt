@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_direction_main.view.*
 import ru.anikey.feature_direction_impl.R
 import ru.anikey.feature_direction_impl.di.DirectionComponent
+import ru.anikey.feature_direction_impl.presentation.managers.OrderManager
 import ru.anikey.feature_direction_impl.presentation.navigation.DirectionScreen
 import ru.anikey.feature_direction_impl.presentation.viewmodels.MainViewModel
 import ru.anikey.feature_direction_impl.presentation.viewstates.DirectionMainState
@@ -41,6 +42,12 @@ class MainFragment : Fragment(), LifecycleOwner {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        setTerminals()
+    }
+
     private fun initInjection() = DirectionComponent
         .get()
         .inject(mainFragment = this)
@@ -66,6 +73,10 @@ class MainFragment : Fragment(), LifecycleOwner {
                     direction = SelectTerminalFragment.EnumDirection.TO
                 )
             )
+        }
+
+        saveButton.setOnClickListener {
+            mViewModel
         }
     }
 
@@ -93,6 +104,30 @@ class MainFragment : Fragment(), LifecycleOwner {
             mainProgressBar.visibility = View.GONE
             fromField.setEnabled(value = true)
             toField.setEnabled(value = true)
+        }
+    }
+
+    private fun setTerminals() {
+        requireView().apply {
+            OrderManager.terminalFrom?.let { terminal ->
+                fromField.apply {
+                    setEnabled(value = true)
+                    setTerminalName(value = terminal.name)
+                    setTerminalAddress(value = terminal.address)
+                }
+            }
+
+            OrderManager.terminalTo?.let { terminal ->
+                toField.apply {
+                    setEnabled(value = true)
+                    setTerminalName(value = terminal.name)
+                    setTerminalAddress(value = terminal.address)
+                }
+            }
+
+            if (OrderManager.terminalFrom != null && OrderManager.terminalTo != null) {
+                saveButton.isEnabled = true
+            }
         }
     }
 
